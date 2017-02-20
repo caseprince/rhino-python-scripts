@@ -28,10 +28,10 @@ def easeInOutCubic(t, b, c, d):
     t -= 2
     return c/2*(t*t*t + 2) + b
 
-reset()
+#reset()
 
-r = 6  # half-size
-d = 9  # distance
+r = 7.2 # half-size
+d = 8.5  # distance
 w = 15 # width
 h = 35 # height
 c = (w - 1) * d / 2 # center offset
@@ -41,6 +41,7 @@ for x in range(w):
     for y in range(w):
         for z in range(h):
 
+            #if x == 0 and y == 0 and z == 0:
             if x == 0 or x + 1 == w or y == 0 or y + 1 == w:
 
                 b = box2pt([r,r,r], [-r,-r,-r])
@@ -50,13 +51,21 @@ for x in range(w):
                 else:
                     ratio = easeInOutCubic(z-(h/2), 1, -1, h/2)
 
-                rs.RotateObject(b, [0,0,0], (x + z) * 2 * ratio, rg.Vector3d.XAxis)
-                rs.RotateObject(b, [0,0,0], (y - z) * 2 * ratio, rg.Vector3d.YAxis)
+                #rs.RotateObject(b, [0,0,0], (x + z) * 2 * ratio, rg.Vector3d.XAxis)
+                #rs.RotateObject(b, [0,0,0], (y - z) * 2 * ratio, rg.Vector3d.YAxis)
                 rs.RotateObject(b, [0,0,0], z * 2 * ratio, rg.Vector3d.ZAxis)
 
                 rs.RotateObject(b, [0,0,0], z / (h-1) * 90, rg.Vector3d.XAxis)
                 rs.RotateObject(b, [0,0,0], z / (h-1) * -90, rg.Vector3d.YAxis)
 
+                Scaling = [1, 5, 10]
+                xform = rs.XformScale(Scaling)
+
+                # Scale Z down...
+                rs.ScaleObject(b, [0,0,0], [1, 1, 0.95])
+
                 pt = [x * d - c, y * d - c, z * d]
                 rs.MoveObject(b, rs.VectorCreate(pt, [0,0,0]))
                 rs.RotateObject(b, [0,0,0], z * (twist / (h-1)), rg.Vector3d.ZAxis)
+
+# http://developer.rhino3d.com/api/RhinoScriptSyntax/win/#object

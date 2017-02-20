@@ -49,8 +49,16 @@ def reset():
 
 reset()
 
-radius_mm = 127
-points = fibonacci_sphere(4098, False, radius_mm)
+# 10"
+# radius_mm = 127
+# petals = 4098
+
+# 8.5"
+radius_mm = 108
+
+surfaceArea = 4 * math.pi * radius_mm**2
+petals = int(surfaceArea / 50.25) # 50.25 square mm per petal
+points = fibonacci_sphere(petals, False, radius_mm)
 
 i = 0
 s = 35 #30.48 #0.48 * radius_mm
