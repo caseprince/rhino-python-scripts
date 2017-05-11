@@ -21,13 +21,42 @@ def reset():
 
 reset()
 
-r = 30 # radius
+# r = 60 # radius
+# t = 2 # thickness
+# jh = 1 # half joint height
+# jo = 0.1 # joint overlap
+# gx = 0.05 # half gap xy
+# tz = 0.0125 # top z gap
+# bz = 0.0125 # bottom z gap
+
+# 18cm diameter on connex
+# r = 90 # radius
+# t = 1.5 # thickness
+# jh = 1 # half joint height
+# jo = 0.05 # joint overlap
+# gx = 0.05 # half gap xy
+# tz = 0.0125 # top z gap
+# gz = 0.1 # gap z
+# bz = 0.0125 # bottom z gap
+
+# 16cm J750 test
+r = 80 # radius
 t = 2 # thickness
 jh = 1 # half joint height
-jo = 0.08 # joint overlap
-gx = 0.0125 # half gap xy
-gz = 0.0 # gap z
+jo = 0.15 # joint overlap
+gx = 0.03 # half gap xy
 tz = 0.0125 # top z gap
+gz = 0.1 # gap z
+bz = 0.0125 # bottom z gap
+
+# 22cm diameter on connex
+r = 110 # radius
+t = 1.5 # thickness
+jh = 1 # half joint height
+jo = 0.25 # joint overlap
+gx = 0.06 # half gap xy
+tz = 0.0125 # top z gap
+gz = 0.1 # gap z
 bz = 0.0125 # bottom z gap
 
 r_inner = r -(t/2) -(jo/2)
@@ -50,7 +79,7 @@ silly_cylinder = rs.AddCylinder([0,0,0 -jh], bz, r)
 top_half = rs.BooleanDifference([top_half], [diff_box, diff_sphere, diff_inner_lower, diff_inner_upper, silly_cylinder])[0]
 
 # bottom half
-fbottom_half = rs.AddSphere([0, 0, 0], r)
+bottom_half = rs.AddSphere([0, 0, 0], r)
 diff_box = box2pt([r, r, jh], [-r, -r, r])
 diff_sphere = rs.AddSphere([0, 0, 0], r - t)
 bottom_half = rs.BooleanDifference([bottom_half], [diff_box, diff_sphere])[0]

@@ -19,12 +19,12 @@ def reset():
     rs.Command("ClearAllMeshes")
     rs.Command("ClearUndo")
 
-#reset()
+reset()
 
 w = 140 # unit width
 h = 13  # unit height
 d = 7.857 # distance
-t = .1  # unit thickness
+t = .5  # unit thickness
 ct = .6 # cap thickness
 c = 42  # count
 twist = 180
@@ -59,3 +59,14 @@ for i in range(c):
     rs.RotateObject(b, [0,0,0], (i/(c-1))*twist, rg.Vector3d.ZAxis)
 
 rs.DeleteObjects([box_bottom, box_top, box_middle])
+
+
+# support
+
+# plane = rs.WorldXYPlane()
+# # plane = rs.RotatePlane(plane, 45.0, [0,0,1])
+# rect_top = rs.AddRectangle( plane, w - h, w - h )
+# rect_bottom = rs.AddRectangle( plane, w, w )
+# rail =  rs.AddLine([0,0,0], [0,0,h])
+
+# top_sup_neg = rs.AddSweep1(rail, [rect_bottom, rect_top], True)
