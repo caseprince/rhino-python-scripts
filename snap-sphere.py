@@ -21,13 +21,7 @@ def reset():
 
 reset()
 
-# r = 60 # radius
-# t = 2 # thickness
-# jh = 1 # half joint height
-# jo = 0.1 # joint overlap
-# gx = 0.05 # half gap xy
-# tz = 0.0125 # top z gap
-# bz = 0.0125 # bottom z gap
+
 
 # 18cm diameter on connex
 # r = 90 # radius
@@ -39,6 +33,7 @@ reset()
 # gz = 0.1 # gap z
 # bz = 0.0125 # bottom z gap
 
+
 # 16cm J750 test
 r = 80 # radius
 t = 2 # thickness
@@ -48,6 +43,7 @@ gx = 0.03 # half gap xy
 tz = 0.0125 # top z gap
 gz = 0.1 # gap z
 bz = 0.0125 # bottom z gap
+
 
 # 22cm diameter on connex
 r = 110 # radius
@@ -59,8 +55,49 @@ tz = 0.0125 # top z gap
 gz = 0.1 # gap z
 bz = 0.0125 # bottom z gap
 
+# 6cm diameter on connex
+r = 30 # radius
+t = 2 # thickness
+jh = 1 # half joint height
+jo = 0.2 # joint overlap
+gx = 0.09 # half gap xy
+tz = 0.0125 # top z gap
+bz = 0.0125 # bottom z gap
+
+# 15cm diameter on connex (matte)
+r = 75 # radius
+t = 1.5 # thickness
+jh = 1 # half joint height
+jo = 0.25 # joint overlap
+gx = 0.08 # half gap xy
+tz = 0.0125 # top z gap
+gz = 0.05 # gap z
+bz = 0.0125 # bottom z gap
+
+# 6cm diameter on j750
+r = 30 # radius
+t = 1.5 # thickness
+jh = 1 # half joint height
+jo = 0.3 # joint overlap
+gx = 0.05 # half gap xy
+tz = 0.0125 # top z gap
+bz = 0.0125 # bottom z gap
+
+# 20cm diameter on connex
+r = 100 # radius
+t = 1.5 # thickness
+jh = 1 # half joint height
+jo = 0.15 # joint overlap
+gx = 0.03 # half gap xy
+tz = 0.0125 # top z gap
+gz = 0.1 # gap z
+bz = 0.0125 # bottom z gap
+
+
 r_inner = r -(t/2) -(jo/2)
 r_outer = r -(t/2) +(jo/2)
+
+
 
 # top half
 top_half = rs.AddSphere([0, 0, 0], r)

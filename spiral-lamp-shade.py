@@ -16,17 +16,17 @@ def box2pt(p1, p2):
 def reset():
     arr1 = rs.AllObjects()
     if arr1: rs.DeleteObjects(arr1)
-    rs.Command("ClearAllMeshes")
+    # rs.Command("ClearAllMeshes")
     rs.Command("ClearUndo")
 
-reset()
+# reset()
 
 w = 140 # unit width
 h = 13  # unit height
 d = 7.857 # distance
-t = .5  # unit thickness
+t = .508 * 2 # unit thickness
 ct = .6 # cap thickness
-c = 42  # count
+c = 43  # count
 twist = 180
 
 c1 = w/2;
@@ -61,12 +61,35 @@ for i in range(c):
 rs.DeleteObjects([box_bottom, box_top, box_middle])
 
 
-# support
+# [inefficent] support
+
+# sup = box2pt([-1, -1, 0], [1, 1, 1])
+
+# for i in range(c - 1):
+#     if i == c - 2:
+#         box_neg = box2pt([-c2 + t, -c2 + t, 0], [c2-t, c2-t, h * (i + 1)])
+#     else:
+#         box_neg = box2pt([-c2, -c2, 0], [c2, c2, h * (i + 1)])
+#     box = box2pt([-c1, -c1, 0], [c1, c1, d * (i + 1)])
+#     box_sup = rs.BooleanDifference([box], [box_neg])[0]
+#     # rs.MoveObject(box_sup, [0, 0, (i+1)*d])
+#     rs.RotateObject(box_sup, [0,0,0], ((i+1)/(c-1))*twist, rg.Vector3d.ZAxis)
+#     sup = rs.BooleanUnion([box_sup, sup])[0]
+
 
 # plane = rs.WorldXYPlane()
-# # plane = rs.RotatePlane(plane, 45.0, [0,0,1])
-# rect_top = rs.AddRectangle( plane, w - h, w - h )
-# rect_bottom = rs.AddRectangle( plane, w, w )
-# rail =  rs.AddLine([0,0,0], [0,0,h])
+# w_top = w - (h*2)
+# rect_top = rs.AddRectangle( plane, w_top, w_top )
+# rs.MoveObject(rect_top, [w_top/-2, w_top/-2, h])
+# w_bottom = w - (t*4)
+# rect_bottom = rs.AddRectangle( plane, w_bottom, w_bottom )
+# rs.MoveObject(rect_bottom, [w_bottom/-2, w_bottom/-2, 0])
+# rail =  rs.AddLine([0, 0,0], [0,0,h])
 
 # top_sup_neg = rs.AddSweep1(rail, [rect_bottom, rect_top], True)
+# rs.CapPlanarHoles(top_sup_neg)
+
+# box = box2pt([-c1 + t, -c1 + t, 0], [c1 - t, c1 - t, h - ct])
+# support_top = rs.BooleanDifference([box], [top_sup_neg])[0]
+
+# rs.MoveObject(support_top, [0,0, ((c-1) * d)])

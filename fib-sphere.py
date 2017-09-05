@@ -55,13 +55,18 @@ reset()
 
 # 8.5"
 radius_mm = 108
+sq_mm_per_petal = 50.25 # 50.25 square mm per petal
+s = 35 #30.48 #0.48 * radius_mm
+
+# 12" w/ larger petals
+radius_mm = 152
+sq_mm_per_petal = 160
+s = 60
 
 surfaceArea = 4 * math.pi * radius_mm**2
-petals = int(surfaceArea / 50.25) # 50.25 square mm per petal
+petals = int(surfaceArea / sq_mm_per_petal)
 points = fibonacci_sphere(petals, False, radius_mm)
 
-i = 0
-s = 35 #30.48 #0.48 * radius_mm
 
 cone = rs.AddCone([0,0,0], .2 * s, .2 * s, True)
 cone2 = rs.AddCone([0,-.05 * s,0], .21 * s, .19 * s, True)
@@ -74,12 +79,12 @@ rs.RotateObject(clipBox, [0,0,0], 5, rg.Vector3d.XAxis)
 petal = rs.BooleanDifference([petal], [clipBox])[0]
 
 
-#for point in points:
-while i < len(points):
-    pt = points[i]
+for pt in points:
+# while i < len(points):
+    # pt = points[i]
     vector = rs.VectorCreate(pt, [0,0,0])
     newPetal = rs.CopyObject(petal, vector)
 
     rs.OrientObject(newPetal, [pt, addPts(pt,[0,0,1]), addPts(pt,[0,1,0])], [pt, [0,0,0], addPts(pt,[0,0,1])])
 
-    i += 1
+    #i += 1
