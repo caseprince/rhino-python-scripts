@@ -80,11 +80,8 @@ petal = rs.BooleanDifference([petal], [clipBox])[0]
 
 
 for pt in points:
-# while i < len(points):
-    # pt = points[i]
+
     vector = rs.VectorCreate(pt, [0,0,0])
     newPetal = rs.CopyObject(petal, vector)
 
     rs.OrientObject(newPetal, [pt, addPts(pt,[0,0,1]), addPts(pt,[0,1,0])], [pt, [0,0,0], addPts(pt,[0,0,1])])
-
-    #i += 1
