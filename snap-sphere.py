@@ -93,11 +93,21 @@ tz = 0.0125 # top z gap
 gz = 0.1 # gap z
 bz = 0.0125 # bottom z gap
 
+# 18cm diameter THIC on j750
+r = 90 # radius
+t = 10 # thickness
+jh = 1 # half joint height
+jo = 0 # 0.15 # joint overlap
+gx = 0.09 # half gap xy
+tz = 0.0125 # top z gap
+gz = 0.1 # gap z
+bz = 0.0125 # bottom z gap
 
 r_inner = r -(t/2) -(jo/2)
 r_outer = r -(t/2) +(jo/2)
 
-
+r_inner = r -(t * 0.8) -(jo/2)
+r_outer = r -(t * 0.8) +(jo/2)
 
 # top half
 top_half = rs.AddSphere([0, 0, 0], r)
