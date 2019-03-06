@@ -21,7 +21,7 @@ def reset():
 
 reset()
 
-
+jz = 0  # joint z offset
 
 # 18cm diameter on connex
 # r = 90 # radius
@@ -93,15 +93,37 @@ tz = 0.0125 # top z gap
 gz = 0.1 # gap z
 bz = 0.0125 # bottom z gap
 
-# 18cm diameter THIC on j750
-r = 90 # radius
-t = 10 # thickness
+# # 18cm diameter THIC on j750
+# r = 90 # radius
+# t = 10 # thickness
+# jh = 1 # half joint height
+# jo = 0 # 0.15 # joint overlap
+# gx = 0.09 # half gap xy
+# tz = 0.0125 # top z gap
+# gz = 0.1 # gap z
+# bz = 0.0125 # bottom z gap
+
+# # 15cm diameter THIC on j750
+# r = 75 # radius
+# t = 20 # thickness
+# jh = 1 # half joint height
+# jo = 0 # 0.15 # joint overlap
+# gx = 0.1 # half gap xy
+# tz = 0.0125 # top z gap
+# gz = 0.1 # gap z
+# bz = 0.0125 # bottom z gap
+
+# 20cm diameter, 5mm thick Italian paper
+r = 100 # radius
+t = 5 # thickness
 jh = 1 # half joint height
-jo = 0 # 0.15 # joint overlap
-gx = 0.09 # half gap xy
+jo = 0 # joint overlap
+gx = 0.15 # half gap xy
 tz = 0.0125 # top z gap
 gz = 0.1 # gap z
 bz = 0.0125 # bottom z gap
+jz = 1 # joint z offset
+
 
 r_inner = r -(t/2) -(jo/2)
 r_outer = r -(t/2) +(jo/2)
