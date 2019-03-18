@@ -88,7 +88,7 @@ petals = 512 # int(surfaceArea / sq_mm_per_petal)
 points = fibonacci_sphere(petals, False, radius_mm)
 
 petal = rs.GetObject("Select Petal")
-# petalInner = rs.GetObject("Select Petal Inner")
+petalInner = rs.GetObject("Select Petal Inner")
 
 rMin = .35
 rMax = .9
@@ -102,36 +102,53 @@ numPts = len(points)
 
 boolean = rs.FirstObject()
 
-for i in range(numPts): # numPts
-# for pt in points:
+petals = []
+
+start = 20
+end = numPts - 10
+
+for i in range(end): # numPts): # numPts
+
+    # i += 20
 
     pt = points[i]
 
     vector = rs.VectorCreate(pt, [0,0,0])
     newPetal = rs.CopyObject(petal, vector)
-    # newPetalInner = rs.CopyObject(petalInner, vector)
+    petalSet = [newPetal]
+    
+    # if len(petals) > 50: 
+      #  petals.pop()
+
+    if i > start and i < end:
+        newPetalInner = rs.CopyObject(petalInner, vector)
+        petalSet = [newPetal, newPetalInner]
 
     angle = easeInSine(i, aMin, aMax - aMin, numPts)
-    rs.RotateObjects([newPetal], pt, angle, [1,0,0], False)
+    rs.RotateObjects(petalSet, pt, angle, [1,0,0], False)
 
     if i < numPts / 2:
         scale = easeOutSine(i, rMin, rDiff, numPts / 2)
     else:
         scale = easeInSine(i - (numPts / 2), rMax, -rDiff, numPts / 2)
-    rs.ScaleObjects([newPetal], pt, [scale,scale,scale])
+    rs.ScaleObjects(petalSet, pt, [scale,scale,scale])
 
     maxTilt = .25
 
-    tilt = math.sin(((pt[2]/radius_mm) * math.pi) + (phis[i])) * maxTilt
+    tilt = 0 # math.sin(((pt[2]/radius_mm) * math.pi) + (phis[i])) * maxTilt
     # rs.OrientObject(newPetal, [pt, addPts(pt,[0,0,-1]), addPts(pt,[0,1,0])], [pt, [0,0,0], addPts(pt,[0,0,1])])
     rs.OrientObject(newPetal, [pt, addPts(pt,[tilt,0,-1]), addPts(pt,[0,1,0])], [pt, [0,0,0], addPts(pt,[0,0,1])])
-    # rs.OrientObject(newPetalInner, [pt, addPts(pt,[tilt,0,-1]), addPts(pt,[0,1,0])], [pt, [0,0,0], addPts(pt,[0,0,1])])
+    if i > start and i < end:
+        rs.OrientObject(newPetalInner, [pt, addPts(pt,[tilt,0,-1]), addPts(pt,[0,1,0])], [pt, [0,0,0], addPts(pt,[0,0,1])])
 
-    # if i == 0:
+    # if i == 20:
     #     boolean = newPetal
-    #     rs.DeleteObject(newPetalInner)
-    # else:
-    #     boolean = rs.BooleanUnion([boolean, newPetal])
-    #     boolean = rs.BooleanDifference([boolean], [newPetalInner])
+    # elif i > 20: 
+    #     boolean = rs.MeshBooleanUnion([boolean, newPetal])
+
+    if i > start and i < end:
+        petals = rs.MeshBooleanDifference(petals, [newPetalInner])
+
+    petals.insert(0, newPetal)
 
     i = i + 1
