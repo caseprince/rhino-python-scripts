@@ -1,36 +1,10 @@
 import rhinoscriptsyntax as rs
 import Rhino.Geometry as rg
-import math, random
-
-
-# time, beginning, change, duration
-def easeInOutCubic(t, b, c, d):
-    t /= d/2
-    if t < 1:
-        return c/2*t*t*t + b
-    t -= 2
-    return c/2*(t*t*t + 2) + b
-
-def easeOutSine(t, b, c, d):
-	return c * math.sin(t/d * (math.pi/2)) + b
-def easeInSine(t, b, c, d):
-	return -c * math.cos(t/d * (math.pi/2)) + c + b
-
-def easeInOutCirc(t, b, c, d):
-	t /= d/2
-	if t < 1:
-		return -c/2 * (math.sqrt(1 - t*t) - 1) + b
-	t -= 2
-	return c/2 * (math.sqrt(1 - t*t) + 1) + b
-
-def reset():
-    arr1 = rs.AllObjects()
-    if arr1: rs.DeleteObjects(arr1)
-    rs.Command("ClearAllMeshes")
-    rs.Command("ClearUndo")
+import math
+from utils.easing import easeInSine
+from utils.reset import reset
 
 reset()
-
 
 radius_mm = 108
 numPoints = 300
@@ -39,12 +13,9 @@ slices = 200
 rippleDecay = 330
 amplitude = 4
 wavelength = 4
-
-print("hello")
-
 rocks = ([radius_mm, 0, 50], [0, radius_mm, 350], [0, -radius_mm, 250], [-radius_mm, 0, 150], )
-curves = []
 
+curves = []
 for s in range(slices):
     points = []
     z = s * height / slices

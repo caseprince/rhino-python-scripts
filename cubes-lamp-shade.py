@@ -1,5 +1,6 @@
 import rhinoscriptsyntax as rs
 import Rhino.Geometry as rg
+from utils.easing import easeInOutCubic
 
 def box2pt(p1, p2):
 
@@ -19,14 +20,6 @@ def reset():
     if arr1: rs.DeleteObjects(arr1)
     #rs.Command("ClearAllMeshes")
     rs.Command("ClearUndo")
-
-# time, beginning, change, duration
-def easeInOutCubic(t, b, c, d):
-    t /= d/2
-    if t < 1:
-        return c/2*t*t*t + b
-    t -= 2
-    return c/2*(t*t*t + 2) + b
 
 #reset()
 
