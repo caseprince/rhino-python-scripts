@@ -1,5 +1,4 @@
 import rhinoscriptsyntax as rs
-import Rhino.Geometry as rg
 import math
 from utils.easing import easeInOutSine
 from utils.reset import reset
@@ -15,18 +14,18 @@ radius_mm = 85
 numPoints = 300
 height = 356
 slices = 200
-amplitude = 2
+amplitude = 1.5
 wavelengthStart = 1.1 #2
 wavelengthMultiplier = 0.008
 # rocks = ([radius_mm, 0, 50], [0, radius_mm, 300], [0, -radius_mm, 225], [-radius_mm, 0, 125])
 # rocks = ([radius_mm, 0, 50])
-# z, angle, radius
-rocks = ([50, math.pi * 0.2, 100], 
-         [220, math.pi * 0.5, 70], 
-         [125, math.pi * 0.9, 50], 
-         [300, math.pi * 1.2, 90], 
-         [90, math.pi * 1.6, 120], 
-         [270, math.pi * 1.85, 30])
+# z, angle, radius, waveOffset
+rocks = ([50, math.pi * 0.2, 100, 0], 
+         [220, math.pi * 0.5, 70, 0], 
+         [125, math.pi * 0.9, 50, math.pi], 
+         [300, math.pi * 1.2, 90, 0], 
+         [100, math.pi * 1.6, 140, math.pi], 
+         [270, math.pi * 1.85, 30, 0])
 
 curves = []
 curves2 = []
@@ -54,10 +53,11 @@ for s in range(slices):
             wavelength = wavelengthStart + dist * wavelengthMultiplier
 
             if (dist < rippleDecay and dist > rippleAttack):
+                waveForm = math.sin(dist / wavelength + rock[3]) * amplitude
                 if (dist < ripplePeak):
-                    radOffset += easeInOutSine(dist - rippleAttack, 0, math.sin(dist / wavelength) * amplitude, ripplePeak - rippleAttack)
+                    radOffset += easeInOutSine(dist - rippleAttack, 0, waveForm, ripplePeak - rippleAttack)
                 else:
-                    radOffset += easeInOutSine(rippleDecay - dist, 0, math.sin(dist / wavelength) * amplitude, rippleDecay - ripplePeak)
+                    radOffset += easeInOutSine(rippleDecay - dist, 0, waveForm, rippleDecay - ripplePeak)
                     
         x2 = (radius_mm + radOffset) * math.cos(angle)
         y2 = (radius_mm + radOffset) * math.sin(angle)
