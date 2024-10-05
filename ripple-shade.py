@@ -1,20 +1,32 @@
 import rhinoscriptsyntax as rs
 import Rhino.Geometry as rg
 import math
-from utils.easing import easeInSine
+from utils.easing import easeInOutSine
 from utils.reset import reset
 from utils.geom import box2pt
 
 reset()
 
-radius_mm = 80
+def shortest_angle_distance(angle1, angle2):
+    diff = abs(angle1 - angle2)
+    return min(diff, 2 * math.pi - diff)
+
+radius_mm = 85
 numPoints = 300
 height = 356
 slices = 200
-rippleDecay = 330
-amplitude = 3
-wavelength = 3
-rocks = ([radius_mm, 0, 50], [0, radius_mm, 300], [0, -radius_mm, 225], [-radius_mm, 0, 125], )
+amplitude = 2
+wavelengthStart = 1.1 #2
+wavelengthMultiplier = 0.008
+# rocks = ([radius_mm, 0, 50], [0, radius_mm, 300], [0, -radius_mm, 225], [-radius_mm, 0, 125])
+# rocks = ([radius_mm, 0, 50])
+# z, angle, radius
+rocks = ([50, math.pi * 0.2, 100], 
+         [220, math.pi * 0.5, 70], 
+         [125, math.pi * 0.9, 50], 
+         [300, math.pi * 1.2, 90], 
+         [90, math.pi * 1.6, 120], 
+         [270, math.pi * 1.85, 30])
 
 curves = []
 curves2 = []
@@ -22,23 +34,37 @@ for s in range(slices):
     points = []
     points2 = []
     z = s * height / slices
-    for i in range(numPoints + 1):     
-        x = radius_mm * math.cos(2 * math.pi * i / numPoints)
-        y = radius_mm * math.sin(2 * math.pi * i / numPoints)
+    for i in range(numPoints + 1):   
+        angle = 2 * math.pi * i / numPoints
+        x = radius_mm * math.cos(angle)
+        y = radius_mm * math.sin(angle)
         pointOnCylinder = (x, y, z)
         radOffset = 0.0
         for rock in rocks:
             
-            dist = rs.Distance(rock, pointOnCylinder) + 4
-            if (dist < rippleDecay):
-                radOffset += easeInSine(rippleDecay - dist, 0, math.sin(dist / wavelength) * amplitude, rippleDecay)
+            # dist = rs.Distance(rock, pointOnCylinder) + 4
+            distY = rock[0] - z
+            distX = shortest_angle_distance(rock[1], angle) * radius_mm
+            dist = math.sqrt(distX * distX + distY * distY)
 
-        x2 = (radius_mm + radOffset) * math.cos(2 * math.pi * i / numPoints)
-        y2 = (radius_mm + radOffset) * math.sin(2 * math.pi * i / numPoints)
+            ripplePeak = rock[2]
+            rippleAttack = ripplePeak * 0.3
+            rippleDecay = ripplePeak * 2.5
+
+            wavelength = wavelengthStart + dist * wavelengthMultiplier
+
+            if (dist < rippleDecay and dist > rippleAttack):
+                if (dist < ripplePeak):
+                    radOffset += easeInOutSine(dist - rippleAttack, 0, math.sin(dist / wavelength) * amplitude, ripplePeak - rippleAttack)
+                else:
+                    radOffset += easeInOutSine(rippleDecay - dist, 0, math.sin(dist / wavelength) * amplitude, rippleDecay - ripplePeak)
+                    
+        x2 = (radius_mm + radOffset) * math.cos(angle)
+        y2 = (radius_mm + radOffset) * math.sin(angle)
         points.append([x2,y2,z])
 
-        x2 = (radius_mm + radOffset - 0.5) * math.cos(2 * math.pi * i / numPoints)
-        y2 = (radius_mm + radOffset - 0.5) * math.sin(2 * math.pi * i / numPoints)
+        x2 = (radius_mm + radOffset - 0.5) * math.cos(angle)
+        y2 = (radius_mm + radOffset - 0.5) * math.sin(angle)
         points2.append([x2,y2,z])
 
     curves.append(rs.AddInterpCurve(points))
@@ -49,10 +75,10 @@ surf2 = rs.AddLoftSrf(curves2)
 rs.DeleteObjects(curves)
 rs.DeleteObjects(curves2)
 
-cyl = rs.AddCylinder([0,0,0], height, radius_mm + 10)
+# cyl = rs.AddCylinder([0,0,0], height, radius_mm + 10)
+
 # parts = rs.BooleanSplit(cyl, (surf, surf2))
 # rs.DeleteObjects(parts[0], parts[2])
-
 # rs.OffsetSurface(surf, 1, -0.1, False, True)
 # rs.DeleteObjects(surf)
 
