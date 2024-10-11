@@ -2,7 +2,7 @@
 
 ### Parametric lampshades for 3D Printing in [RhinoScript](https://developer.rhino3d.com/api/rhinoscript/).
 
-This could probably have been done [grasshopper](https://www.grasshopper3d.com/), but Python seems easier.
+These could also have been done with 🦗 [grasshopper](https://www.grasshopper3d.com/), but Python is easier for me. 🐍
 
 ## Examples
 
