@@ -6,11 +6,11 @@ This could probably have been done [grasshopper](https://www.grasshopper3d.com/)
 
 ## Examples
 
-<img alt="Fibonacci Sphere with 1815 scales" src="https://github.com/caseprince/rhino-python-scripts/blob/main/images/fibonacci-sphere-1815.png" width="70%">
+<img alt="Fibonacci Sphere with 1815 scales" src="https://github.com/caseprince/rhino-python-scripts/blob/master/images/fibonacci-sphere-1815.png" width="70%">
 
 | [Fibonacci Sphere](fib-sphere.py)
 
-<img alt="Ripple Shade" src="https://github.com/caseprince/rhino-python-scripts/blob/main/images/ripple-shade.png" width="70%">
+<img alt="Ripple Shade" src="https://github.com/caseprince/rhino-python-scripts/blob/master/images/ripple-shade.png" width="70%">
 
 | [Ripple Shade](ripple-shade.py)
 
