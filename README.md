@@ -1,5 +1,21 @@
 # rhino-python-scripts
 
+### Parametric lampshades for 3D Printing in [RhinoScript](https://developer.rhino3d.com/api/rhinoscript/).
+
+This could probably have been done [grasshopper](https://www.grasshopper3d.com/), but Python seems easier.
+
+## Examples
+
+<img alt="Fibonacci Sphere with 1815 scales" src="https://github.com/caseprince/rhino-python-scripts/blob/main/images/fibonacci-sphere-1815.png" width="70%">
+
+| [Fibonacci Sphere](fib-sphere.py)
+
+<img alt="Ripple Shade" src="https://github.com/caseprince/rhino-python-scripts/blob/main/images/ripple-shade.png" width="70%">
+
+| [Ripple Shade](ripple-shade.py)
+
+## Setup
+
 1. Clone here: `%APPDATA%\McNeel\Rhinoceros\5.0\scripts\` (\scripts directory may not exist yet)
 2. Button commands: `!-RunPythonScript "rhino-python-scropts/ripple-shade.py"`
 3. Install recommended extension: RhinoPython

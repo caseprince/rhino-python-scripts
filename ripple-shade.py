@@ -11,9 +11,9 @@ def shortest_angle_distance(angle1, angle2):
     return min(diff, 2 * math.pi - diff)
 
 radius_mm = 85
-numPoints = 300
+numPoints = 400
 height = 356
-slices = 200
+slices = 300
 amplitude = 1.5
 wavelengthStart = 1.1 #2
 wavelengthMultiplier = 0.008
@@ -63,8 +63,8 @@ for s in range(slices):
         y2 = (radius_mm + radOffset) * math.sin(angle)
         points.append([x2,y2,z])
 
-        x2 = (radius_mm + radOffset - 0.5) * math.cos(angle)
-        y2 = (radius_mm + radOffset - 0.5) * math.sin(angle)
+        x2 = (radius_mm + radOffset - 1) * math.cos(angle)
+        y2 = (radius_mm + radOffset - 1) * math.sin(angle)
         points2.append([x2,y2,z])
 
     curves.append(rs.AddInterpCurve(points))
@@ -75,12 +75,14 @@ surf2 = rs.AddLoftSrf(curves2)
 rs.DeleteObjects(curves)
 rs.DeleteObjects(curves2)
 
-# cyl = rs.AddCylinder([0,0,0], height, radius_mm + 10)
+cyl = rs.AddCylinder([0,0,0], height, radius_mm + 10)
 
-# parts = rs.BooleanSplit(cyl, (surf, surf2))
+# parts = rs.BooleanSplit(cyl, (surf, surf2)) # this method doesn't exist?
 # rs.DeleteObjects(parts[0], parts[2])
+
+# Offsetting without z distortion would be nice. This is close but not quite right: 
+# ...Could trim off the top and bottom of the cylinder...  
 # rs.OffsetSurface(surf, 1, -0.1, False, True)
-# rs.DeleteObjects(surf)
 
 collarOffset = 60
 collar = rs.AddCylinder([0,0,collarOffset], 8, 28)
