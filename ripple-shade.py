@@ -10,7 +10,7 @@ def shortest_angle_distance(angle1, angle2):
     diff = abs(angle1 - angle2)
     return min(diff, 2 * math.pi - diff)
 
-radius_mm = 85
+radius_mm = 90
 numPoints = 400
 height = 356
 slices = 300
@@ -29,7 +29,7 @@ rocks = ([50, math.pi * 0.2, 100, 0],
 
 curves = []
 curves2 = []
-for s in range(slices):
+for s in range(slices + 1):
     points = []
     points2 = []
     z = s * height / slices
@@ -84,7 +84,7 @@ cyl = rs.AddCylinder([0,0,0], height, radius_mm + 10)
 # ...Could trim off the top and bottom of the cylinder...  
 # rs.OffsetSurface(surf, 1, -0.1, False, True)
 
-collarOffset = 60
+collarOffset = 68
 collar = rs.AddCylinder([0,0,collarOffset], 8, 28)
 hole = rs.AddCylinder([0,0,collarOffset], 8, 20.5)
 collar = rs.BooleanDifference(collar, hole)
